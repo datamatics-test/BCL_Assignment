@@ -1,0 +1,98 @@
+{
+  "category A": [
+    {
+      "is_internal": 1,
+      "type": "buy",
+      "status": "approved",
+      "balance": 59
+    },
+    {
+      "is_internal": 0,
+      "type": "buy",
+      "status": "pending",
+      "balance": 58
+    },
+    {
+      "is_internal": 1,
+      "type": "buy",
+      "status": "approved",
+      "balance": 60
+    },
+    {
+      "is_internal": 1,
+      "type": "sell",
+      "status": "approved",
+      "balance": 20
+    },
+    {
+      "is_internal": 0,
+      "type": "sell",
+      "status": "pending",
+      "balance": 10.025
+    }
+  ],
+  "category B": [
+    {
+      "is_internal": 0,
+      "type": "buy",
+      "status": "pending",
+      "balance": 200
+    },
+    {
+      "is_internal": 1,
+      "type": "transfer",
+      "balance": 10,
+      "status": "pending"
+    },
+    {
+      "is_internal": 1,
+      "type": "buy",
+      "balance": 100.058,
+      "status": "approved"
+    },
+    {
+      "is_internal": 0,
+      "type": "transfer",
+      "balance": 20,
+      "status": "approved"
+    },
+    {
+      "is_internal": 0,
+      "type": "sell",
+      "balance": 10.025,
+      "status": "pending"
+    }
+  ],
+  "category C": [
+    {
+      "is_internal": 1,
+      "type": "buy",
+      "balance": 200,
+      "status": "approved"
+    },
+    {
+      "is_internal": 0,
+      "type": "buy",
+      "balance": 0.00058,
+      "status": "pending"
+    },
+    {
+      "is_internal": 1,
+      "type": "buy",
+      "balance": 120.058,
+      "status": "approved"
+    },
+    {
+      "is_internal": 1,
+      "type": "sell",
+      "balance": 220,
+      "status": "approved"
+    },
+    {
+      "is_internal": 0,
+      "type": "sell",
+      "balance": 1.025,
+      "status": "pending"
+    }
+  ]
+}
