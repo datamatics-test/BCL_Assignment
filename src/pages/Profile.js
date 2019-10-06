@@ -6,7 +6,9 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
+  Dimensions,
+  TextInput
 } from "react-native";
 import { connect } from "react-redux";
 import { LinearGradient } from "expo-linear-gradient";
@@ -14,7 +16,9 @@ import { logoutUser } from "../action/auth.actions";
 import filterCategory from "./filterCategory";
 import CategoryList from "./CategoryList";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import categoryList from "../assets/categoryList.json";
 
+const { width: WIDTH } = Dimensions.get("window");
 const styles = StyleSheet.create({
   viewContainer: {
     backgroundColor: "#FFFFFF",
@@ -48,6 +52,19 @@ const styles = StyleSheet.create({
     fontSize: 12,
     textAlign: "center",
     margin: 12
+  },
+  input: {
+    width: WIDTH - 55,
+    height: 45,
+    borderRadius: 10,
+    fontSize: 16,
+    paddingLeft: 45,
+    marginHorizontal: 25,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    borderColor: "#F2F2F2"
   }
 });
 
@@ -56,16 +73,39 @@ class Profile extends Component {
     super(props);
     this.state = {
       selectedCategory: "all",
-      filteredCategory: filterCategory("all")
+      filteredCategory: filterCategory("all", ""),
+      sum: this.findCatSum("all")
     };
     //console.log("###############################");
     //console.log(this.state.filteredCategory);
   }
 
+  findCatSum(cat) {
+    let sum = 0;
+    Object.keys(categoryList)
+      .filter(key => {
+        if (key === cat) {
+          return true;
+        }
+        if (cat == "all") {
+          return true;
+        }
+      })
+      .filter(o => {
+        categoryList[o].map(ob => {
+          sum = sum + ob.balance;
+          //  console.log(sum);
+        });
+      });
+
+    return sum.toFixed(2);
+  }
+
   handleCategoryChange(category) {
     this.setState({
-      filteredCategory: filterCategory(category),
-      selectedCategory: category
+      filteredCategory: filterCategory(category, ""),
+      selectedCategory: category,
+      sum: this.findCatSum(category)
     });
   }
 
@@ -73,6 +113,11 @@ class Profile extends Component {
     this.props.dispatch(logoutUser());
   };
 
+  handleSearchChange = event => {
+    this.setState({
+      filteredCategory: filterCategory(this.state.selectedCategory, event)
+    });
+  };
   render() {
     const {
       getUser: { userDetails }
@@ -116,7 +161,7 @@ class Profile extends Component {
                   : this.state.selectedCategory
               }
             />
-            <Text> 3700.25</Text>
+            <Text> {this.state.sum}</Text>
           </View>
 
           <TouchableWithoutFeedback style={styles.catSelectionContainer}>
@@ -139,6 +184,13 @@ class Profile extends Component {
               <Text style={styles.catText}>ALL </Text>
             </TouchableOpacity>
           </TouchableWithoutFeedback>
+          <View>
+            <TextInput
+              placeholder="Search"
+              style={styles.input}
+              onChangeText={this.handleSearchChange}
+            />
+          </View>
         </View>
         <View
           style={{

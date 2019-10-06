@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { View, Text } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { Asset, font } from "expo";
 
 export default class CategoryWithGradient extends Component {
   render() {
