@@ -24,6 +24,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     flex: 1
   },
+  categorySum: {
+    color: "#3AD1BF",
+    fontSize: 60,
+    marginBottom: 15
+  },
   circle: {
     width: 10,
     height: 10,
@@ -64,7 +69,9 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
-    borderColor: "#F2F2F2"
+    borderColor: "#F2F2F2",
+    borderWidth: 0.8,
+    marginTop: 25
   }
 });
 
@@ -153,7 +160,13 @@ class Profile extends Component {
             <View style={styles.circle}></View>
             <Text> Your Portfolio</Text>
           </View>
-          <View style={{ flexDirection: "row" }}>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              textAlign: "center"
+            }}
+          >
             <CategoryWithGradient
               categoryValue={
                 this.state.selectedCategory == "all"
@@ -161,29 +174,32 @@ class Profile extends Component {
                   : this.state.selectedCategory
               }
             />
-            <Text> {this.state.sum}</Text>
+            <Text style={styles.categorySum}> {this.state.sum}</Text>
           </View>
-
-          <TouchableWithoutFeedback style={styles.catSelectionContainer}>
-            <TouchableOpacity
-              onPress={() => this.handleCategoryChange("category A")}
-            >
-              <Text style={styles.catText}>CATEGORY A </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => this.handleCategoryChange("category B")}
-            >
-              <Text style={styles.catText}>CATEGORY B </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => this.handleCategoryChange("category C")}
-            >
-              <Text style={styles.catText}>CATEGORY C </Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => this.handleCategoryChange("all")}>
-              <Text style={styles.catText}>ALL </Text>
-            </TouchableOpacity>
-          </TouchableWithoutFeedback>
+          <View>
+            <TouchableWithoutFeedback style={styles.catSelectionContainer}>
+              <TouchableOpacity
+                onPress={() => this.handleCategoryChange("category A")}
+              >
+                <Text style={styles.catText}>CATEGORY A </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => this.handleCategoryChange("category B")}
+              >
+                <Text style={styles.catText}>CATEGORY B </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => this.handleCategoryChange("category C")}
+              >
+                <Text style={styles.catText}>CATEGORY C </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => this.handleCategoryChange("all")}
+              >
+                <Text style={styles.catText}>ALL </Text>
+              </TouchableOpacity>
+            </TouchableWithoutFeedback>
+          </View>
           <View>
             <TextInput
               placeholder="Search"
