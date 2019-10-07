@@ -19,6 +19,7 @@ import Loader from "../component/Loader";
 import {Actions} from 'react-native-router-flux';
 import { Stitch, RemoteMongoClient  } from "mongodb-stitch-react-native-sdk";
 
+
 const styles = StyleSheet.create({
   container : {
     backgroundColor:'#FFFFFF',
@@ -69,7 +70,12 @@ const styles = StyleSheet.create({
 
 
 class Input extends Component {
-  
+  constructor(props) {
+    super(props);    this.state = {
+      loading: false,
+      
+    }
+  }
 	signup() {
 		Actions.signup()
 	}
@@ -78,7 +84,12 @@ class Input extends Component {
   onlogin = (values) => {
       // this.loginUser(values);
       // Keyboard.dismiss();
+    this.setState({
+      loading:true
+    }
+      
 
+    )
     const stitchAppClient = Stitch.defaultAppClient;
     const mongoClient = stitchAppClient.getServiceClient(
       RemoteMongoClient.factory,
@@ -92,10 +103,15 @@ class Input extends Component {
       .asArray()
       .then(resp => {
         if(resp.length!=1){
-        
+          this.setState({
+            loading:false
+          })
         alert("Username or Password is Incorrect");
+        
       }else{
-        alert("login Succefully");
+        this.setState({
+          loading:false
+        })
         Actions.app();
       }
       })
@@ -139,6 +155,8 @@ class Input extends Component {
             placeholder="Password"
             secureTextEntry={true}
             component={this.renderTextInput} />
+            <Loader
+          loading={this.state.loading} />
         <View style={styles.signupTextCont1}>
 					<Text style={styles.signupText}>Forget</Text>
 					<TouchableOpacity onPress={this.signup}><Text style={styles.signupButton}> Email</Text></TouchableOpacity>
@@ -150,7 +168,7 @@ class Input extends Component {
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
         <View style={styles.signupTextCont}>
-					<Text style={styles.signupText}>Dont Have An Account?</Text>
+					<Text style={styles.signupText}>Don't Have An Account?</Text>
 					<TouchableOpacity onPress={this.signup}><Text style={styles.signupButton}> Signup</Text></TouchableOpacity>
 				</View>
 			</View>
@@ -167,7 +185,7 @@ const validate = (values) => {
         errors.email = "Email is required"
     }
     if(!values.password) {
-        errors.password = "Name is required"
+        errors.password = "Password is required"
     }
     return errors;
 };
