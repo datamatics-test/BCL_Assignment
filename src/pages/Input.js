@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Text,
   View,
-  StatusBar ,
+  StatusBar,
   TouchableOpacity,
   Alert
 } from 'react-native';
@@ -17,58 +17,57 @@ import { Field, reduxForm } from 'redux-form';
 import InputText from "../component/InputText";
 import Logo from '../component/Logo';
 import Loader from "../component/Loader";
-import {Actions} from 'react-native-router-flux';
-import { Stitch, RemoteMongoClient  } from "mongodb-stitch-react-native-sdk";
+import { Actions } from "react-native-router-flux";
+import { Stitch, RemoteMongoClient } from "mongodb-stitch-react-native-sdk";
 
 
 const styles = StyleSheet.create({
-  container : {
-    backgroundColor:'#FFFFFF',
+  container: {
+    backgroundColor: "#FFFFFF",
     flex: 1,
-    alignItems:'center',
-    justifyContent :'center'
+    alignItems: "center",
+    justifyContent: "center"
   },
-  signupTextCont : {
-  	flexGrow: 1,
-    alignItems:'baseline',
-    justifyContent :'center',
-    marginTop:30,
-    flexDirection:'row'
+  signupTextCont: {
+    flexGrow: 1,
+    alignItems: "baseline",
+    justifyContent: "center",
+    marginTop: 30,
+    flexDirection: "row"
   },
-  signupTextCont1 : {
-  	position:"relative",
-    marginRight:136,
-    marginLeft:47,
-    marginTop:20,
-    flexDirection:'row'
-  },signupText: {
-  	color:'#898989',
-  	fontSize:16
+  signupTextCont1: {
+    position: "relative",
+    marginRight: 136,
+    marginLeft: 47,
+    marginTop: 20,
+    flexDirection: "row"
+  },
+  signupText: {
+    color: "#898989",
+    fontSize: 16
   },
   signupButton: {
-  	color:'#31C5C3',
-  	fontSize:16,
-  	fontWeight:'500'
+    color: "#31C5C3",
+    fontSize: 16,
+    fontWeight: "500"
   },
   button: {
-    width:281,
-    height:48,
-    backgroundColor:'#31C5C3',
+    width: 281,
+    height: 48,
+    backgroundColor: "#31C5C3",
     borderRadius: 30,
-    marginTop:99,
+    marginTop: 99,
     paddingVertical: 13
   },
   buttonText: {
-    fontSize:14,
-    lineHeight:17,
-    color:'white',
-    textTransform:"capitalize",
-    textAlign:'center',
-    borderRadius:10
-  },
-  
+    fontSize: 14,
+    lineHeight: 17,
+    color: "white",
+    textTransform: "capitalize",
+    textAlign: "center",
+    borderRadius: 10
+  }
 });
-
 
 class Input extends Component {
   constructor(props) {
@@ -119,38 +118,46 @@ class Input extends Component {
       .catch(err => {
         console.warn(err);
       });
-  
-      
-  }
+  };
 
-  renderTextInput = (field) => {
-        const {meta: {touched, error}, label, secureTextEntry, maxLength, keyboardType, placeholder, input: {onChange, ...restInput}} = field;
-        return (
-            <View>
-              <InputText
-                  onChangeText={onChange}
-                  maxLength={maxLength}
-                  placeholder={placeholder}
-                  keyboardType={keyboardType}
-                  secureTextEntry={secureTextEntry}
-                  label={label}
-                  {...restInput} />
-            {(touched && error) && <Text style={styles.errorText}>{error}</Text>}
-            </View>
-        );
-  }
+  renderTextInput = field => {
+    const {
+      meta: { touched, error },
+      label,
+      secureTextEntry,
+      maxLength,
+      keyboardType,
+      placeholder,
+      input: { onChange, ...restInput }
+    } = field;
+    return (
+      <View>
+        <InputText
+          onChangeText={onChange}
+          maxLength={maxLength}
+          placeholder={placeholder}
+          keyboardType={keyboardType}
+          secureTextEntry={secureTextEntry}
+          label={label}
+          {...restInput}
+        />
+        {touched && error && <Text style={styles.errorText}>{error}</Text>}
+      </View>
+    );
+  };
 
-	render() {
-    const { handleSubmit, loginUser} = this.props;
+  render() {
+    const { handleSubmit, loginUser } = this.props;
     //console.log(loginUser);
-		return(
-			<View style={styles.container}>
-        {(loginUser && loginUser.isLoading) && <Loader />}
-				<Logo/>
-        <Field 
-            name="email"
-            placeholder="Email"
-            component={this.renderTextInput} />
+    return (
+      <View style={styles.container}>
+        {loginUser && loginUser.isLoading && <Loader />}
+        <Logo />
+        <Field
+          name="email"
+          placeholder="Email"
+          component={this.renderTextInput}
+        />
         <Field
             name="password"
             placeholder="Password"
@@ -159,13 +166,20 @@ class Input extends Component {
             <Loader
           loading={this.state.loading} />
         <View style={styles.signupTextCont1}>
-					<Text style={styles.signupText}>Forget</Text>
-					<TouchableOpacity onPress={this.signup}><Text style={styles.signupButton}> Email</Text></TouchableOpacity>
+          <Text style={styles.signupText}>Forget</Text>
+          <TouchableOpacity onPress={this.signup}>
+            <Text style={styles.signupButton}> Email</Text>
+          </TouchableOpacity>
           <Text style={styles.signupText}> Or</Text>
-          <TouchableOpacity onPress={this.signup}><Text style={styles.signupButton}> Password</Text></TouchableOpacity>
+          <TouchableOpacity onPress={this.signup}>
+            <Text style={styles.signupButton}> Password</Text>
+          </TouchableOpacity>
           <Text style={styles.signupText}> ?</Text>
-				</View>    
-        <TouchableOpacity style={styles.button} onPress={handleSubmit(this.onlogin)}>
+        </View>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={handleSubmit(this.onlogin)}
+        >
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
         <View style={styles.signupTextCont}>
@@ -190,16 +204,19 @@ const validate = (values) => {
     return errors;
 };
 
-mapStateToProps = (state) => ({
-    loginUser: state.authReducer.loginUser
-})
+mapStateToProps = state => ({
+  loginUser: state.authReducer.loginUser
+});
 
-mapDispatchToProps = (dispatch) => ({
-    dispatch
+mapDispatchToProps = dispatch => ({
+  dispatch
 });
 
 export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  ),
   reduxForm({
     form: "login",
     validate

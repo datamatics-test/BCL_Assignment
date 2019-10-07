@@ -90,7 +90,6 @@ class Profile extends Component {
     //console.log(this.state.filteredCategory);
   }
 
-
   findCatSum(cat) {
     let sum = 0;
     Object.keys(categoryList)

@@ -5,7 +5,6 @@
 
 import React, { Component } from "react";
 import { Text, View, StyleSheet } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import CategoryWithGradient from "./CategoryWithGradient";
 export default class CategoryList extends Component {
   componentDidMount() {}
