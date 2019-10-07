@@ -1,3 +1,8 @@
+/**
+ * Created By: Mayank Chawla
+ * Description : used for allocating backgroud color depending on the type of category
+ */
+
 import React, { Component } from "react";
 import { View, Text } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";

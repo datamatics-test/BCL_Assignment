@@ -1,4 +1,10 @@
-import React, { Component } from 'react';
+/**
+ * Created By: Mayank Chawla
+ * Description: Used for routing pages 
+ * 
+ **/
+ 
+ import React, { Component } from 'react';
 import {Router, Stack, Scene} from 'react-native-router-flux';
 
 import Login from '../pages/Input';

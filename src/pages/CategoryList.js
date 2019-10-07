@@ -1,3 +1,8 @@
+/**
+ * Created By: Mayank Chawla
+ * Description: Used for fetching data to be shown in list
+ */
+
 import React, { Component } from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";

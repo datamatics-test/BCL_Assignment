@@ -1,3 +1,7 @@
+/**
+ * Created By: Mayank Chawla
+ * Desciption: This is login page, user can login into app or can sign up
+ */
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -10,11 +14,8 @@ import {
 import {connect} from "react-redux";
 import {compose} from "redux";
 import { Field, reduxForm } from 'redux-form';
-import Confetti from "react-native-confetti";
 import InputText from "../component/InputText";
-import {loginUser} from "../action/auth.actions";
 import Logo from '../component/Logo';
-import Form from '../component/Form';
 import Loader from "../component/Loader";
 import {Actions} from 'react-native-router-flux';
 import { Stitch, RemoteMongoClient  } from "mongodb-stitch-react-native-sdk";
@@ -72,7 +73,7 @@ const styles = StyleSheet.create({
 class Input extends Component {
   constructor(props) {
     super(props);    this.state = {
-      loading: false,
+      loading: false, //setting default value false of loader
       
     }
   }
@@ -80,10 +81,10 @@ class Input extends Component {
 		Actions.signup()
 	}
 
-  
+  /**
+   * used for showing loader, loader is displayed on setting loading value=true
+   */
   onlogin = (values) => {
-      // this.loginUser(values);
-      // Keyboard.dismiss();
     this.setState({
       loading:true
     }
@@ -95,24 +96,24 @@ class Input extends Component {
       RemoteMongoClient.factory,
       "userlogin"
     );
-    const db = mongoClient.db("mern-auth");
-    const validates = db.collection("users");
+    const db = mongoClient.db("mern-auth");  //Establising connection with MongoDB Atlas account
+    const validates = db.collection("users"); //fetching User Collection
     
       validates
-      .find({ email: values.email, password:values.password}, { sort: { date: -1 } })
+      .find({ email: values.email, password:values.password}, { sort: { date: -1 } }) //validating user
       .asArray()
       .then(resp => {
-        if(resp.length!=1){
+        if(resp.length!=1){ // if response lenth is not equal to 1 then user is not valid
           this.setState({
-            loading:false
+            loading:false //disabling loader screen
           })
         alert("Username or Password is Incorrect");
         
-      }else{
+      }else{ // if user is valid
         this.setState({
-          loading:false
+          loading:false  //disabling loader screen
         })
-        Actions.app();
+        Actions.app(); //Routing to Profile page
       }
       })
       .catch(err => {
@@ -175,12 +176,11 @@ class Input extends Component {
 			)
 	}
 }
-
+/**
+ * Validations for user id and password entered
+ */
 const validate = (values) => {
     const errors = {};
-    if(!values.name) {
-        errors.name = "Name is required"
-    }
     if(!values.email) {
         errors.email = "Email is required"
     }

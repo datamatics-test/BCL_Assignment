@@ -1,4 +1,9 @@
-import React, { Component } from 'react';
+/**
+ * Created By: Mayank Chawla
+ * Description: Used for Signing up new user
+ */
+
+ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
@@ -88,18 +93,18 @@ class Signup extends Component {
       RemoteMongoClient.factory,
       "userlogin"
     );
-    const db = mongoClient.db("mern-auth");
-    const validates = db.collection("users");
+    const db = mongoClient.db("mern-auth"); //establising connection
+    const validates = db.collection("users");  //fetch Collection users
     
       validates
-      .find({ email: values.email}, { sort: { date: -1 } })
+      .find({ email: values.email}, { sort: { date: -1 } })  //checking if user already exists
       .asArray()
       .then(resp => {
-        if(resp.length!=1){
+        if(resp.length!=1){  //user does not exists condition
         this.registerUser(values);
-      }else{
+      }else{  //users already exists
         alert("Email Id Already Registered");
-        Actions.pop();
+        Actions.pop(); // route to sign in page
       }
       })
       .catch(err => {
@@ -117,7 +122,7 @@ class Signup extends Component {
     const validates = db.collection("users");
     
     validates
-    .insertOne({
+    .insertOne({  //inserting entery of new users 
       name:values.name,
       email:values.email,
       password:values.password,
@@ -184,6 +189,7 @@ class Signup extends Component {
 	}
 }
 
+//validating fields
 const validate = (values) => {
     const errors = {};
     if(!values.name) {

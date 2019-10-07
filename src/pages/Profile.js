@@ -1,3 +1,7 @@
+/**
+ * Created By: Mayank Chawla
+ * Description: Used for Showing profile data with filters and search box 
+ * */
 import React, { Component } from "react";
 import CategoryWithGradient from "./CategoryWithGradient";
 import {
@@ -11,7 +15,6 @@ import {
   TextInput
 } from "react-native";
 import { connect } from "react-redux";
-import { LinearGradient } from "expo-linear-gradient";
 import { logoutUser } from "../action/auth.actions";
 import filterCategory from "./filterCategory";
 import CategoryList from "./CategoryList";
@@ -76,7 +79,7 @@ const styles = StyleSheet.create({
 });
 
 class Profile extends Component {
-  constructor(props) {
+  constructor(props) { // on landing fetching data for all
     super(props);
     this.state = {
       selectedCategory: "all",
@@ -86,6 +89,7 @@ class Profile extends Component {
     //console.log("###############################");
     //console.log(this.state.filteredCategory);
   }
+
 
   findCatSum(cat) {
     let sum = 0;
@@ -108,12 +112,15 @@ class Profile extends Component {
     return sum.toFixed(2);
   }
 
+  /**
+   *  Filtering data according to the category selected
+   */
   handleCategoryChange(category) {
     this.setState({
       filteredCategory: filterCategory(category, ""),
       selectedCategory: category,
-      sum: this.findCatSum(category),
-      selectedButton: category
+      sum: this.findCatSum(category), // used for calculating sum of all items fetched under selected category
+      selectedButton: category //used for setting the text and background color of view and text used for switching catehories
     });
   }
 
@@ -121,6 +128,9 @@ class Profile extends Component {
     this.props.dispatch(logoutUser());
   };
 
+  /**
+   * filter result based on the text entered in search box
+   */
   handleSearchChange = event => {
     this.setState({
       filteredCategory: filterCategory(this.state.selectedCategory, event)
